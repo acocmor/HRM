@@ -1,0 +1,15 @@
+E:\Project\CSharp\HRM\HRM.Entity\bin\Debug\net5.0\HRM.Entity.deps.json
+E:\Project\CSharp\HRM\HRM.Entity\bin\Debug\net5.0\HRM.Entity.runtimeconfig.json
+E:\Project\CSharp\HRM\HRM.Entity\bin\Debug\net5.0\HRM.Entity.runtimeconfig.dev.json
+E:\Project\CSharp\HRM\HRM.Entity\bin\Debug\net5.0\HRM.Entity.dll
+E:\Project\CSharp\HRM\HRM.Entity\bin\Debug\net5.0\ref\HRM.Entity.dll
+E:\Project\CSharp\HRM\HRM.Entity\bin\Debug\net5.0\HRM.Entity.pdb
+E:\Project\CSharp\HRM\HRM.Entity\obj\Debug\net5.0\HRM.Entity.csproj.AssemblyReference.cache
+E:\Project\CSharp\HRM\HRM.Entity\obj\Debug\net5.0\HRM.Entity.GeneratedMSBuildEditorConfig.editorconfig
+E:\Project\CSharp\HRM\HRM.Entity\obj\Debug\net5.0\HRM.Entity.AssemblyInfoInputs.cache
+E:\Project\CSharp\HRM\HRM.Entity\obj\Debug\net5.0\HRM.Entity.AssemblyInfo.cs
+E:\Project\CSharp\HRM\HRM.Entity\obj\Debug\net5.0\HRM.Entity.csproj.CoreCompileInputs.cache
+E:\Project\CSharp\HRM\HRM.Entity\obj\Debug\net5.0\HRM.Entity.dll
+E:\Project\CSharp\HRM\HRM.Entity\obj\Debug\net5.0\ref\HRM.Entity.dll
+E:\Project\CSharp\HRM\HRM.Entity\obj\Debug\net5.0\HRM.Entity.pdb
+E:\Project\CSharp\HRM\HRM.Entity\obj\Debug\net5.0\HRM.Entity.genruntimeconfig.cache
