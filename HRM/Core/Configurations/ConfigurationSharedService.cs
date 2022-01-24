@@ -11,6 +11,7 @@ namespace HRM.Core.Configurations
     {
         public static void AddSharedServices(this IServiceCollection services, IConfiguration config)
         {
+            services.AddTransient<IAuthService, AuthManager>();
             services.AddTransient<IUserService, UserManager>();
             services.AddTransient<IEmployeeService, EmployeeManager>();
             services.AddTransient<IAddressService, AddressManager>();

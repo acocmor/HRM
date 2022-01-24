@@ -1,18 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
+using HRM.App_Start;
 using HRM.Core.Configurations;
 using HRM.Core.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+
 using Microsoft.OpenApi.Models;
 
 namespace HRM
@@ -29,19 +27,29 @@ namespace HRM
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<JwtConfig>(Configuration.GetSection("Jwt"));
+
             services.AddSharedServices(Configuration);
             services.AddDbContext(Configuration);
             services.AddAutoMapper(Configuration);
-            //services.AddJWT(Configuration);
-
+            services.AddAuthentication(Configuration);  
+            
+            services.AddCors(); 
+            
             services.AddControllers()
+                .AddNewtonsoftJson(ops =>
+                {
+                    //ops.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                    ops.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                })
                 .AddFluentValidation( fv => {
-                    fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                    // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                     fv.RegisterValidatorsFromAssemblyContaining<Startup>(); }); 
 
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "HRM", Version = "v1"}); });
         }
 
+ 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -56,6 +64,7 @@ namespace HRM
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             //error middleware

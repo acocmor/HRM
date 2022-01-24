@@ -12,11 +12,11 @@ namespace HRM.Entity.Entities
         public int MonthOfBirth { get; set; }
         public int YearOfBirth { get; set; }
         public string? Avatar { get; set; }
-        public Guid GenderId { get; set; }
+        public Guid? GenderId { get; set; }
         public Gender Gender { get; set; }
         public Guid UserId { get; set; }
         public User User { get; set; }
-        public Address Address { get; set; }
+        public Address? Address { get; set; }
         public Guid? PositionId { get; set; }
         public Position Position { get; set; }
         public Guid? DepartmentId { get; set; }

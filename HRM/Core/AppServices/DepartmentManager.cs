@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using HRM.Core.Exceptions;
+using HRM.Core.Filters;
 using HRM.Core.Interfaces;
 using HRM.Models.Department;
 using HRM.Entity.Constracts;
+using HRM.Entity.Entities;
+using HRM.Models.Paginate;
+using HRM.Models.Position;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace HRM.Core.AppServices
@@ -22,29 +29,63 @@ namespace HRM.Core.AppServices
             _mapper = mapper;
         }
 
-        public Task<List<GetDepartmentDTO>> GetAll()
+        public async Task<Paginate<GetDepartmentDTO>> GetAll(GetDepartmentsFilter request)
         {
-            throw new NotImplementedException();
+            request ??= new GetDepartmentsFilter();
+            
+            var positions = _departmentRepository.GetAll();
+     
+            if (!string.IsNullOrEmpty(request.Name))
+            {
+                positions.Where(x => EF.Functions.Like(x.Name, $"%{request.Name}%")).Load();
+            }
+
+            var result = _mapper.ProjectTo<GetDepartmentDTO>(positions.OrderBy(x => x.Id));
+            return await result.ToPaginatedListAsync(request.CurrentPage, request.PageSize);
         }
 
-        public Task<GetDepartmentDTO> GetById(Guid id)
+        public async Task<GetDepartmentDTO> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<GetDepartmentDTO>(await _departmentRepository.GetById(id));
         }
 
-        public Task<GetDepartmentDTO> Create(CreateDepartmentDTO request)
+        public async Task<GetDepartmentDTO> Create(CreateDepartmentDTO request)
         {
-            throw new NotImplementedException();
+            var name = await _departmentRepository.GetByName(request.Name);
+            if (name != null)
+            {
+                throw new ApiException("Chức vụ này đã tồn tại.") { StatusCode = (int)HttpStatusCode.BadRequest };
+            }
+
+            var newDepartment = _mapper.Map<Department>(request);
+            newDepartment.CreatedAt = DateTime.Now;
+            newDepartment.UpdatedAt = DateTime.Now;
+            var department = _departmentRepository.Create(newDepartment);;
+
+            await _departmentRepository.SaveChangesAsync(); 
+            return _mapper.Map<GetDepartmentDTO>(department);
         }
 
-        public Task<bool> Update(Guid id, UpdateDepartmentDTO request)
+        public async Task<bool> Update(Guid id, UpdateDepartmentDTO request)
         {
-            throw new NotImplementedException();
+            var original = await _departmentRepository.GetById(id);
+            if (original == null) throw new ApiException("Chức vụ này không tồn tại.") { StatusCode = (int)HttpStatusCode.BadRequest };
+
+            var name = await _departmentRepository.GetByName(request.Name);
+            if (name != null) throw new ApiException("Chức vụ này đã tồn tại.") { StatusCode = (int)HttpStatusCode.BadRequest };
+
+            original.Name = request.Name;
+            original.UpdatedAt = DateTime.Now;
+
+            _departmentRepository.Update(original);
+            await _departmentRepository.SaveChangesAsync();
+            return true;
         }
 
-        public Task<bool> Delete(Guid id)
+        public async Task<bool> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            await _departmentRepository.Delete(id);
+            return await _departmentRepository.SaveChangesAsync() > 0;
         }
 
         public void Dispose()

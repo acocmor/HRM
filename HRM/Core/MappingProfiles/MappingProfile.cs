@@ -19,7 +19,6 @@ namespace HRM.API.Core.MappingProfiles
             CreateMap<User, LoginDTO>().ReverseMap();
             CreateMap<GetUserDTO, LoginDTO>().ReverseMap();
             CreateMap<CreateUserDTO, User>();
-            CreateMap<ChangePasswordDTO, User>();
 
             //Employee Map
             CreateMap<Employee, GetEmployeeDTO>().ReverseMap();
@@ -33,19 +32,16 @@ namespace HRM.API.Core.MappingProfiles
 
             //Gender Map
             CreateMap<Gender, GetGenderDTO>().ReverseMap();
-            CreateMap<Gender, GetGenderNoList>().ReverseMap();
             CreateMap<CreateGenderDTO, Gender>();
             CreateMap<UpdateGenderDTO, Gender>();
 
             //Position Map
             CreateMap<Position, GetPositionDTO>().ReverseMap();
-            CreateMap<Position, GetPositionNoList>().ReverseMap();
             CreateMap<CreatePositionDTO, Position>();
             CreateMap<UpdatePositionDTO, Position>();
 
             //Department Map
             CreateMap<Department, GetDepartmentDTO>().ReverseMap();
-            CreateMap<Department, GetDepartmentNoList>().ReverseMap();
             CreateMap<CreateDepartmentDTO, Department>();
             CreateMap<UpdateDepartmentDTO, Department>();
         }

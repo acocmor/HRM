@@ -1,11 +1,9 @@
 using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace HRM.Models.Position
+namespace HRM.Core.Filters
 {
-    public class GetPositionNoList
+    public class GetGenderFilter : PaginationFilter
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public virtual DateTime CreatedAt { get; set; }
         public virtual DateTime UpdatedAt { get; set; }

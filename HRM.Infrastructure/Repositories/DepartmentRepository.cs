@@ -44,5 +44,20 @@ namespace HRM.Infrastructure.Repositories
                 .ThenInclude(x => x.Position)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
+        
+        public async Task<Department> GetByName(string name)
+        {
+            return await DbSet
+                .AsNoTracking()
+                .Include(x => x.Employees)
+                .ThenInclude(x => x.Gender)
+                .Include(x => x.Employees)
+                .ThenInclude(x => x.User)
+                .Include(x => x.Employees)
+                .ThenInclude(x => x.Address)
+                .Include(x => x.Employees)
+                .ThenInclude(x => x.Position)
+                .FirstOrDefaultAsync(e => e.Name == name);
+        }
     }
 }

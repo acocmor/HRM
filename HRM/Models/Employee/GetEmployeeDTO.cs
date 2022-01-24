@@ -17,12 +17,35 @@ namespace HRM.Models.Employee
         public int MonthOfBirth { get; set; }
         public int YearOfBirth { get; set; }
         public string Avatar { get; set; }
-        public GetGenderDTO Gender { get; set; }
-        public GetUserDTO User { get; set; }
-        public GetAddressDTO Address { get; set; }
+        public virtual GetGenderDTO Gender { get; set; }
+        public virtual GetUserDTO User { get; set; }
+        public virtual GetAddressDTO Address { get; set; }
         public virtual GetPositionDTO Position { get; set; }
         public virtual GetDepartmentDTO Department { get; set; }
-        public virtual DateTime CreatedAt { get; set; }
-        public virtual DateTime UpdatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        
+        public GetEmployeeDTO(){}
+        
+        public GetEmployeeDTO(Entity.Entities.Employee employee
+            , Entity.Entities.Gender gender
+            , Entity.Entities.User user
+            , Entity.Entities.Address address
+            , Entity.Entities.Position position
+            , Entity.Entities.Department department)
+        {
+            Id = employee.Id;
+            FirstName = employee.FirstName;
+            LastName = employee.LastName;
+            DayOfBirth = employee.DayOfBirth;
+            MonthOfBirth = employee.MonthOfBirth;
+            YearOfBirth = employee.DayOfBirth;
+            Avatar = employee.Avatar;
+            Gender ??= new GetGenderDTO(employee.Gender, null);
+            Address ??= new GetAddressDTO(employee.Address, null);
+            User ??= new GetUserDTO(employee.User, null);
+            Position ??= new GetPositionDTO(employee.Position, null);
+            Department ??= new GetDepartmentDTO(employee.Department, null);
+        }
     }
 }

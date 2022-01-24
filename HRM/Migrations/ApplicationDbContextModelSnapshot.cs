@@ -95,7 +95,7 @@ namespace HRM.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("GenderId")
+                    b.Property<Guid?>("GenderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LastName")
@@ -180,7 +180,9 @@ namespace HRM.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
@@ -190,7 +192,8 @@ namespace HRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email");
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -215,9 +218,7 @@ namespace HRM.Migrations
 
                     b.HasOne("HRM.Entity.Entities.Gender", "Gender")
                         .WithMany("Employees")
-                        .HasForeignKey("GenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GenderId");
 
                     b.HasOne("HRM.Entity.Entities.Position", "Position")
                         .WithMany("Employees")

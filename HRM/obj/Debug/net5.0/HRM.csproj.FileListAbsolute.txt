@@ -72,4 +72,12 @@ E:\Project\CSharp\HRM\HRM\obj\Debug\net5.0\HRM.dll
 E:\Project\CSharp\HRM\HRM\obj\Debug\net5.0\ref\HRM.dll
 E:\Project\CSharp\HRM\HRM\obj\Debug\net5.0\HRM.pdb
 E:\Project\CSharp\HRM\HRM\obj\Debug\net5.0\HRM.genruntimeconfig.cache
-E:\Project\CSharp\HRM\HRM\bin\Debug\net5.0\dotnet-ef.dll
+E:\Project\CSharp\HRM\HRM\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\Project\CSharp\HRM\HRM\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+E:\Project\CSharp\HRM\HRM\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+E:\Project\CSharp\HRM\HRM\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+E:\Project\CSharp\HRM\HRM\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
+E:\Project\CSharp\HRM\HRM\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
+E:\Project\CSharp\HRM\HRM\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+E:\Project\CSharp\HRM\HRM\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+E:\Project\CSharp\HRM\HRM\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll

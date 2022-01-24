@@ -44,6 +44,7 @@ namespace HRM.API.Core.Middlewares
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         break;
                 }
+
                 var responseModel = new BaseResponse<string>() { Succeeded = false, Message = error?.Message, Status = response.StatusCode};
                 var result = JsonSerializer.Serialize(responseModel);
 

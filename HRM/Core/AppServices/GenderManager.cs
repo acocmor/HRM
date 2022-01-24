@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using HRM.Core.Exceptions;
+using HRM.Core.Filters;
 using HRM.Core.Interfaces;
 using HRM.Models.Gender;
 using HRM.Entity.Constracts;
+using HRM.Entity.Entities;
+using HRM.Models.Paginate;
+using HRM.Models.Position;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace HRM.Core.AppServices
@@ -23,29 +30,63 @@ namespace HRM.Core.AppServices
             _mapper = mapper;
         }
 
-        public Task<List<GetGenderDTO>> GetAll()
+        public async Task<Paginate<GetGenderDTO>> GetAll(GetGenderFilter request)
         {
-            throw new NotImplementedException();
+            request ??= new GetGenderFilter();
+            
+            var positions = _genderRepository.GetAll();
+     
+            if (!string.IsNullOrEmpty(request.Name))
+            {
+                positions.Where(x => EF.Functions.Like(x.Name, $"%{request.Name}%")).Load();
+            }
+
+            var result = _mapper.ProjectTo<GetGenderDTO>(positions.OrderBy(x => x.Id));
+            return await result.ToPaginatedListAsync(request.CurrentPage, request.PageSize);
         }
 
-        public Task<GetGenderDTO> GetById(Guid id)
+        public async Task<GetGenderDTO> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<GetGenderDTO>(await _genderRepository.GetById(id));
         }
 
-        public Task<GetGenderDTO> Create(CreateGenderDTO request)
+        public async Task<GetGenderDTO> Create(CreateGenderDTO request)
         {
-            throw new NotImplementedException();
+            var name = await _genderRepository.GetByName(request.Name);
+            if (name != null)
+            {
+                throw new ApiException("Giới tính này đã tồn tại.") { StatusCode = (int)HttpStatusCode.BadRequest };
+            }
+
+            var newGender = _mapper.Map<Gender>(request);
+            newGender.CreatedAt = DateTime.Now;
+            newGender.UpdatedAt = DateTime.Now;
+            
+            var gender = _genderRepository.Create(newGender);
+            await _genderRepository.SaveChangesAsync();
+            return _mapper.Map<GetGenderDTO>(gender);
         }
 
-        public Task<bool> Update(Guid id, UpdateGenderDTO request)
+        public async Task<bool> Update(Guid id, UpdateGenderDTO request)
         {
-            throw new NotImplementedException();
+            var original = await _genderRepository.GetById(id);
+            if (original == null) throw new ApiException("Giới tính này không tồn tại.") { StatusCode = (int)HttpStatusCode.BadRequest };
+
+            var name = await _genderRepository.GetByName(request.Name);
+            if (name != null) throw new ApiException("Giới tính này đã tồn tại.") { StatusCode = (int)HttpStatusCode.BadRequest };
+
+            original.Name = request.Name;
+            original.UpdatedAt = DateTime.Now;
+
+            _genderRepository.Update(original);
+            await _genderRepository.SaveChangesAsync();
+            return true;
         }
 
-        public Task<bool> Delete(Guid id)
+        public async Task<bool> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            await _genderRepository.Delete(id);
+            return await _genderRepository.SaveChangesAsync() > 0;
         }
 
         public void Dispose()
