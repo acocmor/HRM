@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using HRM.App_Start;
 using HRM.Infrastructure.Context;
@@ -26,12 +27,18 @@ namespace HRM.Core.Configurations
                     jwt.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
+                        
+                        //Tự cấp token
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        
+                        //Ký vào token
                         ValidateLifetime = true,
                         ValidIssuer = tokenOptions.Issuer,
                         ValidAudience = tokenOptions.Audience,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenOptions.SecretKey))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenOptions.SecretKey)),
+                        
+                        ClockSkew = TimeSpan.Zero
                     };
                 });
         }

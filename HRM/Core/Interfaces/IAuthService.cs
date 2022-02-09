@@ -5,6 +5,8 @@ namespace HRM.Core.Interfaces
 {
     public interface IAuthService
     {
-        Task<string> Login(LoginDTO request);
+        Task<TokenModel> Login(LoginDTO request);
+        Task<bool> Logout(TokenModel request);
+        Task<TokenModel> RenewToken(TokenModel request);
     }
 }

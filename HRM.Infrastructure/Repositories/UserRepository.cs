@@ -62,7 +62,17 @@ namespace HRM.Infrastructure.Repositories
 
         public async Task<User> Login(string email, string password)
         {
-            return await DbSet.FindAsync(email, password);
+            return await DbSet
+                .AsNoTracking()
+                .Include(x => x.Employee)
+                .ThenInclude(x => x.Gender)
+                .Include(x => x.Employee)
+                .ThenInclude(x => x.Address)
+                .Include(x => x.Employee)
+                .ThenInclude(x => x.Position)
+                .Include(x => x.Employee)
+                .ThenInclude(x => x.Department)
+                .FirstOrDefaultAsync(e => e.Email.Equals(email) && e.Password == password);
         }
     }
 }

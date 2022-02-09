@@ -25,6 +25,7 @@ namespace HRM.Core.Configurations
             services.AddTransient<IGenderRepository, GenderRepository>();
             services.AddTransient<IPositionRepository, PositionRepository>();
             services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+            services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
         }
     }
 }

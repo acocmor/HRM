@@ -11,7 +11,7 @@ namespace HRM.Models.Address
         public string SubDistrict { get; set; }
         public string District { get; set; }
         public string City { get; set; }
-        public virtual GetEmployeeDTO Employee { get; set; }
+        public GetEmployeeDTO Employee { get; set; }
         public virtual DateTime? CreatedAt { get; set; }
         public virtual DateTime? UpdatedAt { get; set; }
         
@@ -19,12 +19,17 @@ namespace HRM.Models.Address
         
         public GetAddressDTO(Entity.Entities.Address address, Entity.Entities.Employee employee)
         {
+            if (address == null)
+            {
+                return;
+            }
             Id = address.Id;
             Detail = address.Detail;
             SubDistrict = address.SubDistrict;
             District = address.District;
             City = address.City;
-            Employee ??= new GetEmployeeDTO(employee, employee.Gender, employee.User, null, employee.Position, employee.Department);
+            if(employee != null)
+                Employee = new GetEmployeeDTO(employee, employee?.Gender, employee?.User, null, employee?.Position, employee?.Department);
             CreatedAt = address.CreatedAt;
             UpdatedAt = address.UpdatedAt;
         }

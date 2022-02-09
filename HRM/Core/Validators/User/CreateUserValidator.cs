@@ -1,13 +1,16 @@
+
 using FluentValidation;
-using HRM.Models.Address;
+using HRM.Entity.Constracts;
 using HRM.Models.User;
 
 namespace HRM.API.Core.Validators.User
 {
     public class CreateUserValidator : AbstractValidator<CreateUserDTO>
     {
-        public CreateUserValidator()
+        private readonly IUserRepository _userRepository;
+        public CreateUserValidator(IUserRepository userRepository)
         {
+            _userRepository = userRepository;
             //validation email
             RuleFor(o => o.Email)
                 .NotEmpty().WithMessage("Hãy nhập địa chỉ email.")
@@ -30,6 +33,13 @@ namespace HRM.API.Core.Validators.User
                 .MinimumLength(8).WithMessage("Độ dài mật khẩu phải từ 8 đến 32 ký tự")
                 .NotEmpty().WithMessage("Hãy xác nhận mật khẩu.")
                 .Equal(o => o.Password).WithMessage("Xác nhận mật khẩu không đúng");
+        }
+        
+        public bool HaveUniqueNumber(string email)
+        {
+            var result = _userRepository.GetByEmail(email);
+            return result != null;
+            //return true;
         }
     }
 }

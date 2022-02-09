@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "4b3e62d1-b72e-4d5f-83cd-14cc438817dc": {
+      "ProjectGuid": "4b3e62d1-b72e-4d5f-83cd-14cc438817dc",
+      "DisplayName": "HRM.Entity",
+      "ColorIndex": 0
+    },
+    "a634f288-371c-4cf8-b8ac-8e634aa38b82": {
+      "ProjectGuid": "a634f288-371c-4cf8-b8ac-8e634aa38b82",
+      "DisplayName": "HRM.Infrastructure",
+      "ColorIndex": 1
+    },
+    "a4a2eb58-3969-4bd5-bab5-d61a3849c037": {
+      "ProjectGuid": "a4a2eb58-3969-4bd5-bab5-d61a3849c037",
+      "DisplayName": "HRM",
+      "ColorIndex": 2
+    }
+  },
+  "NextColorIndex": 3
+}

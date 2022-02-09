@@ -28,7 +28,7 @@ namespace HRM.Infrastructure.Repositories
                 .ThenInclude(x => x.Department)
                 .Include(x => x.Users)
                 .ThenInclude(x => x.Employee)
-                .ThenInclude(x => x.Position)
+                .ThenInclude(x => x.Position);
         }
         
         public async override Task<Role> GetById(Guid id)

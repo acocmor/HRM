@@ -10,20 +10,21 @@ namespace HRM.Models.Position
         public Guid Id { get; set; }
         public string Name { get; set; }
         public ICollection<GetEmployeeDTO> Employees { get; set; }
-        public virtual DateTime CreatedAt { get; set; }
-        public virtual DateTime UpdatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         
         public GetPositionDTO(){}
         
         public GetPositionDTO(Entity.Entities.Position position, ICollection<Entity.Entities.Employee> list)
         {
+            if (position == null) return;
             Id = position.Id;
             Name = position.Name;
             if (list != null)
             {
                 foreach (var item in list)
                 {
-                    Employees.Add(new GetEmployeeDTO(item, item.Gender, item.User, item.Address, null, item.Department));
+                    Employees.Add(new GetEmployeeDTO(item, item?.Gender, item?.User, item?.Address, null, item?.Department));
                 }
             }
         }

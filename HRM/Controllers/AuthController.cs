@@ -17,12 +17,27 @@ namespace HRM.Controllers
         {
             _authressManager = service;
         }
+        
         [AllowAnonymous]
-        [HttpGet("login")]
-        public async Task<ActionResult<string>> GetById([FromBody] LoginDTO request)
+        [HttpPost("login")]
+        public async Task<ActionResult<TokenModel>> Login([FromBody] LoginDTO request)
         {
             var data = await _authressManager.Login(request);
-            return Ok(new BaseResponse<string>(data, $"Login Success"));
+            return Ok(new BaseResponse<TokenModel>(data, $"Login Success"));
+        }
+        
+        [HttpPost("logout")]
+        public async Task<ActionResult<bool>> Logout([FromBody] TokenModel tokenModel)
+        {
+            var data = await _authressManager.Logout(tokenModel);
+            return Ok(new BaseResponse<bool>(data));
+        }
+            
+        [HttpPost("renew-token")]
+        public async Task<ActionResult<TokenModel>> RenewToken([FromBody] TokenModel tokenModel)
+        {
+            var data = await _authressManager.RenewToken(tokenModel);
+            return Ok(new BaseResponse<TokenModel>(data, $"Refresh Token Success"));
         }
     }
 }

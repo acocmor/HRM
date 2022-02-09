@@ -16,13 +16,17 @@ namespace HRM.Models.Department
         public GetDepartmentDTO(){}
         public GetDepartmentDTO(Entity.Entities.Department department, ICollection<Entity.Entities.Employee> list)
         {
+            if (department == null)
+            {
+                return;
+            }
             Id = department.Id;
             Name = department.Name;
             if (list != null)
             {
                 foreach (var item in list)
                 {
-                    Employees.Add(new GetEmployeeDTO(item, item.Gender, item.User, item.Address, item.Position, null));
+                    Employees.Add(new GetEmployeeDTO(item, item?.Gender, item?.User, item?.Address, item?.Position, null));
                 }
             }
         }

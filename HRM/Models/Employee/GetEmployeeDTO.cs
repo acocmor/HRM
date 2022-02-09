@@ -17,11 +17,11 @@ namespace HRM.Models.Employee
         public int MonthOfBirth { get; set; }
         public int YearOfBirth { get; set; }
         public string Avatar { get; set; }
-        public virtual GetGenderDTO Gender { get; set; }
-        public virtual GetUserDTO User { get; set; }
-        public virtual GetAddressDTO Address { get; set; }
-        public virtual GetPositionDTO Position { get; set; }
-        public virtual GetDepartmentDTO Department { get; set; }
+        public GetGenderDTO Gender { get; set; }
+        public GetUserDTO User { get; set; }
+        public GetAddressDTO Address { get; set; }
+        public GetPositionDTO Position { get; set; }
+        public GetDepartmentDTO Department { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         
@@ -34,6 +34,7 @@ namespace HRM.Models.Employee
             , Entity.Entities.Position position
             , Entity.Entities.Department department)
         {
+            if (employee == null) return;
             Id = employee.Id;
             FirstName = employee.FirstName;
             LastName = employee.LastName;
@@ -41,11 +42,16 @@ namespace HRM.Models.Employee
             MonthOfBirth = employee.MonthOfBirth;
             YearOfBirth = employee.DayOfBirth;
             Avatar = employee.Avatar;
-            Gender ??= new GetGenderDTO(employee.Gender, null);
-            Address ??= new GetAddressDTO(employee.Address, null);
-            User ??= new GetUserDTO(employee.User, null);
-            Position ??= new GetPositionDTO(employee.Position, null);
-            Department ??= new GetDepartmentDTO(employee.Department, null);
+            if(gender != null)
+                Gender = new GetGenderDTO(gender, null);
+            if(address != null)
+                Address = new GetAddressDTO(address, null);
+            if(user != null)
+                User = new GetUserDTO(user, null);
+            if(position != null)
+                Position = new GetPositionDTO(position, null);
+            if(department != null)
+                Department = new GetDepartmentDTO(department, null);
         }
     }
 }
